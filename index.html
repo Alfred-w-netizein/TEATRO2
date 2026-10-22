@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Downloads - Projeto Teatral</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variáveis de Cores para fácil edição */
+        :root {
+            --bg-color: #121212;
+            /* Fundo escuro */
+            --surface-color: #1E1E1E;
+            /* Fundo dos cartões */
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --accent-color: #3B82F6;
+            /* Azul profissional */
+            --accent-hover: #2563EB;
+            --border-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(30, 30, 30, 1) 0%, rgba(18, 18, 18, 1) 100%);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Container Principal */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Grade de Arquivos */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        /* Cartão do Arquivo */
+        .file-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent-color);
+        }
+
+        /* Ícone do Arquivo (Simulando o ícone do Word) */
+        .file-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #2B579A;
+            /* Cor clássica do Word */
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 16px 16px 0;
+            border-style: solid;
+            border-color: #1E1E1E #1E1E1E #4A7BC8 #4A7BC8;
+        }
+
+        .file-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        /* Título do Arquivo */
+        .file-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 48px;
+            /* Garante alinhamento */
+        }
+
+        /* Tipo do Arquivo */
+        .file-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        /* Botão de Download */
+        .download-btn {
+            width: 100%;
+            padding: 10px 16px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .download-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Rodapé */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+    <main>
+        <div class="file-grid">
+
+            <!-- CARD 1 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">CORISCO</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/CORISCO.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">DÁDÁ</div>
+                <div class="file-type">Modelo Word (.dotx)</div>
+                <a href="documentos/DÁDÁ.dotx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">FILHA DE ZÉ</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/FILHA DE ZÉ.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">LAMPIÃO</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/LAMPIÃO.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">MARIA</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/MARIA.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">NARRADOR</div>
+                <div class="file-type">Modelo Word (.dotx)</div>
+                <a href="documentos/NARRADOR.dotx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 7 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">ROTEIRO</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/ROTEIRO.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 8 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">ROTEIRO - SEM FILHA</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/ROTEIRO-SEM-FILHA.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 9 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">ROTEIRO - SEM FILHA - MAIS REGIONAL</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/ROTEIRO-SEM-FILHA-MAIS-REGIONAL.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 10 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">VOLANTE 1</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/VOLANTE 1.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 11 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">VOLANTES 2-3</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/VOLANTES2-3.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+            <!-- CARD 12 -->
+            <div class="file-card">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                </div>
+                <div class="file-name">ZÉ</div>
+                <div class="file-type">Documento Word (.docx)</div>
+                <a href="documentos/ZÉ.docx" download class="download-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Baixar
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+
+
+</body>
+
+</html>
